@@ -1,4 +1,4 @@
-# Archive Manager | deepin-compressor|
+# Archive Manager|deepin-compressor|
 
 ## Overview
 
