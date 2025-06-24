@@ -1,3 +1,9 @@
+deepin-compressor (6.5.8) unstable; urgency=medium
+
+  * fix: Remove spaces in archive manager titles for consistency
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Tue, 24 Jun 2025 17:14:10 +0800
+
 deepin-compressor (6.5.7) unstable; urgency=medium
 
   * update changelog
