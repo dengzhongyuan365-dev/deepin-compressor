@@ -190,10 +190,10 @@ PluginFinishType CliPzipPlugin::addFiles(const QList<FileEntry> &files, const Co
     // 静默模式
     arguments << "-q";
 
-    // 压缩级别（如果指定）
-    if (options.iCompressionLevel >= 1 && options.iCompressionLevel <= 9) {
-        arguments << "-l" << QString::number(options.iCompressionLevel);
-    }
+    // 压缩级别：强制使用 level 1（最快速度），忽略 GUI 设置
+    // pzip 的优势是并行压缩，level 1 已经有很好的压缩率
+    arguments << "-l" << "1";
+    Q_UNUSED(options.iCompressionLevel);  // 忽略 GUI 传递的压缩级别
 
     // 线程数：只有大于1时才指定，否则让 pzip 自动使用全部 CPU 核心
     if (options.iCPUTheadNum > 1) {
