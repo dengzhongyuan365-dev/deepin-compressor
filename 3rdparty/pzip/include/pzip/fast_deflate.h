@@ -489,6 +489,7 @@ private:
     void storeFast();
     size_t fillBlock(const uint8_t* data, size_t size);
     void flushOutput();
+    void forceFlush();
     
     WriteFunc output_;
     std::vector<uint8_t> window_;
