@@ -31,15 +31,16 @@ include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/archiveinterface)
 include_directories(${PROJECT_SOURCE_DIR}/plugin)
 include_directories(${PROJECT_SOURCE_DIR}/process)
+include_directories(${CMAKE_SOURCE_DIR}/src/archive/encoding)
 include_directories(${HFILES_OUTPUT_PATH})
 
 
 #导出头文件
 set(output_h_files
     ${PROJECT_SOURCE_DIR}/common.h
-    ${PROJECT_SOURCE_DIR}/commonstruct.h
+    ${CMAKE_SOURCE_DIR}/src/source/common/archiveui_types.h
     ${PROJECT_SOURCE_DIR}/datamanager.h
-    ${PROJECT_SOURCE_DIR}/queries.h
+    ${CMAKE_SOURCE_DIR}/src/source/dialog/archivequeries.h
     ${PROJECT_SOURCE_DIR}/archiveinterface/archiveinterface.h
     ${PROJECT_SOURCE_DIR}/archiveinterface/cliinterface.h
     ${PROJECT_SOURCE_DIR}/archiveinterface/cliproperties.h
@@ -52,12 +53,17 @@ set(output_h_files
     ${PROJECT_SOURCE_DIR}/process/kptydevice.h
     ${PROJECT_SOURCE_DIR}/process/kptyprocess.h
 )
-file(COPY ${output_h_files} DESTINATION ${HFILES_OUTPUT_PATH})
+foreach(header IN LISTS output_h_files)
+    get_filename_component(header_name "${header}" NAME)
+    configure_file("${header}" "${HFILES_OUTPUT_PATH}/${header_name}" COPYONLY)
+endforeach()
 
 #链接库路径
 link_directories(${LIBRARY_OUTPUT_PATH})
 
 #生成动静态库
+list(APPEND c_files ${CMAKE_SOURCE_DIR}/src/archive/encoding/encoding_detector.cpp)
+list(APPEND c_files ${CMAKE_SOURCE_DIR}/src/source/dialog/archivequeries.cpp)
 add_library(${LIB_NAME} SHARED ${h_files} ${c_files})
 
 #链接动静态库
